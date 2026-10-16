@@ -1,0 +1,10 @@
+{
+  "characteristic": "0000fee1-0000-1000-8000-00805f9b34fb",
+  "operation": "ReadValue only; no changes between reads",
+  "values": [
+    "03 00 00 00 00 00 00 00 00 03",
+    "04 00 00 00 00 00 00 00 00 04",
+    "05 00 00 00 00 00 00 00 00 05"
+  ],
+  "interpretation": "First and last bytes increment with reads; apparent counter, not established settings readback"
+}

@@ -13,3 +13,8 @@ await assert.rejects(connectSc650({getDevices:async()=>[],requestDevice:async()=
 assert.equal(mouseButtons.length,5);assert.equal(new Set(mouseButtons.map(b=>b.id)).size,5);assert.equal(getMouseButton('rear').number,5);
 assert.equal(clickPlate(-.01,.03),'left');assert.equal(clickPlate(.01,.03),'right');assert.equal(clickPlate(-.01,-.03),null);
 console.log('Authorized-device reconnect, explicit chooser, cancellation, device validation, and 3D button regions pass.');
+const autoPaired=device();
+assert.equal(await connectSc650({getDevices:async()=>[autoPaired],requestDevice:async()=>{throw new Error('Unexpected chooser');}},false,true),autoPaired);
+assert.equal(await connectSc650({getDevices:async()=>[],requestDevice:async()=>{throw new Error('Unexpected chooser');}},false,true),null);
+assert.equal(await connectSc650(null,false,true),null);
+console.log('Dongle automatic reconnect opens authorized devices and never prompts when none are granted.');

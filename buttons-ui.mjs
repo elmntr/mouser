@@ -1,8 +1,10 @@
+import {connectBluetoothSettings,validateBluetoothReport,writeBluetoothSettings} from './bluetooth-read.mjs';
 import {connectSc650,isSc650} from './hid-connection.mjs';
 import { buildButtonReport, keys, actions } from './button-protocol.mjs';
 const get=id=>document.getElementById(id);
 const storageKey='mouser.side-buttons.v1';
-let device=null,busy=false,lines=[];
+let device=null,bluetooth=null,busy=false,lines=[];
+const connected=()=>!!device?.opened||!!bluetooth?.device.gatt.connected;
 let choices={rear:{type:'key',key:'J',modifiers:4},front:{type:'forward',key:'F8',modifiers:0}};
 try{
   const saved=localStorage.getItem(storageKey);
@@ -33,35 +35,62 @@ for(const [side,title] of [['left','1. Left button'],['right','2. Right button']
   refresh();get('assignments').append(fieldset);
 }
 function update(){
-  const connected=!!device?.opened;
-  get('apply').disabled=!connected||busy;get('connect').disabled=busy||connected;get('choose-device').disabled=busy;
-  get('connect').textContent=connected?'Connected ✓':busy?'Connecting…':'Connect mouse ↗';
-  get('connection-badge').textContent=connected?'Connected':'Offline';get('connection-badge').classList.toggle('online',connected);
-  get('connection-title').textContent=connected?'Ready when you are.':'Make it yours.';
+  const online=connected();
+  get('apply').disabled=!online||busy;get('connect').disabled=busy||online;get('choose-device').disabled=busy;
+  get('connect').textContent=online?'Connected ✓':busy?'Connecting…':'Connect mouse ↗';
+  get('connection-badge').textContent=online?'Connected':'Offline';get('connection-badge').classList.toggle('online',online);
+  get('connection-title').textContent=online?'Ready when you are.':'Make it yours.';
+  get('connect-bluetooth').disabled=busy||!!bluetooth?.device.gatt.connected;
+  get('transport-label').textContent=bluetooth?.device.gatt.connected?'Bluetooth':'2.4 GHz';
+  for(const id of ['polling-apply','macro-apply','profile-apply'])get(id).disabled=busy||!!bluetooth?.device.gatt.connected;
+  get('bluetooth-note').hidden=!bluetooth?.device.gatt.connected;
   for(const side of ['left','right','middle','rear','front'])get(side).disabled=busy;
 }
-async function connect(choose=false){
+function rememberTransport(value){try{localStorage.setItem('mouser.transport.v1',value);}catch{}}
+async function connect(choose=false,automatic=false){
+  if(busy||automatic&&connected())return;
   busy=true;update();
   try{
     if(choose&&device?.opened){await device.close();device=null;}
-    const selected=await connectSc650(navigator.hid,choose);
-    if(!selected){get('status').textContent='No device selected. Your draft is still saved.';return;}
-    device=selected;get('status').textContent='Connected via dongle. Choose your settings and apply.';
-  }catch(error){get('status').textContent=error.message;}
+    const selected=await connectSc650(navigator.hid,choose,automatic);
+    if(!selected){if(!automatic)get('status').textContent='No device selected. Your draft is still saved.';return false;}
+    if(bluetooth){bluetooth.device.gatt.disconnect();bluetooth=null;}
+    device=selected;rememberTransport('dongle');get('status').textContent='Connected via dongle. Choose your settings and apply.';return true;
+  }catch(error){if(!automatic)get('status').textContent=error.message;}
   finally{busy=false;update();}
 }
+async function connectBluetooth(automatic=false){
+ if(busy||automatic&&connected())return;busy=true;update();
+ try{
+  const selected=await connectBluetoothSettings(navigator.bluetooth,automatic);
+  if(!selected)return false;
+  if(device?.opened)await device.close();device=null;
+  bluetooth=selected;rememberTransport('bluetooth');
+  selected.device.addEventListener('gattserverdisconnected',()=>{if(bluetooth===selected){bluetooth=null;get('status').textContent='Bluetooth disconnected. Your draft is saved.';update();}});
+  get('status').textContent='Connected via Bluetooth. Buttons verified; DPI and lighting experimental.';
+  return true;
+ }catch(error){if(!automatic)get('status').textContent=error.message;}
+ finally{busy=false;update();}
+}
+get('connect-bluetooth').addEventListener('click',()=>connectBluetooth());
 get('connect').addEventListener('click',()=>connect());
 get('choose-device').addEventListener('click',()=>connect(true));
-if(navigator.hid)navigator.hid.getDevices().then(devices=>{if(devices.some(isSc650)&&!device&&!busy){get('connect').textContent='Reconnect mouse ↗';get('status').textContent='Your paired dongle is ready. Reconnect without the chooser.';}}).catch(()=>{});
+// Previously granted devices only: automatic attempts never open a chooser or send settings.
+async function autoReconnect(){
+ if(connected()||busy||document.hidden)return;
+ let preferred='bluetooth';try{preferred=localStorage.getItem('mouser.transport.v1')||preferred;}catch{}
+ const attempts=preferred==='dongle'?[()=>connect(false,true),()=>connectBluetooth(true)]:[()=>connectBluetooth(true),()=>connect(false,true)];
+ for(const attempt of attempts){if(await attempt())return;}
+ if(!busy&&!connected())get('status').textContent='Waiting for your authorized mouse. Wake it or connect once to authorize this site.';
+}
+window.addEventListener('focus',autoReconnect);
+document.addEventListener('visibilitychange',autoReconnect);
+if(navigator.hid)navigator.hid.addEventListener('connect',autoReconnect);
+setInterval(autoReconnect,10000);
+void autoReconnect();
 get('apply').addEventListener('click',async()=>{
-  if(!device?.opened||busy)return;
-  busy=true;update();
-  try{
-    const report=buildButtonReport(choices);
-    await device.sendFeatureReport(report[0],report.slice(1));
-    get('status').textContent='Button assignments sent. Test the mouse below.';
-  }catch(error){get('status').textContent='Transfer failed: '+error.message+' Verify button behavior before retrying.';}
-  finally{busy=false;update();}
+ try{await sendSettingsReport(buildButtonReport(choices));get('status').textContent='Button assignments sent. Test the mouse below.';}
+ catch(error){get('status').textContent='Transfer failed: '+error.message+' Verify button behavior before retrying.';}
 });
 if(navigator.hid)navigator.hid.addEventListener('disconnect',event=>{if(event.device===device){device=null;get('status').textContent='Dongle disconnected.';update();}});
 const test=get('test');
@@ -72,17 +101,18 @@ test.addEventListener('auxclick',event=>event.preventDefault());test.addEventLis
 get('clear').addEventListener('click',()=>{lines=[];get('events').textContent='Waiting for input.';test.focus();});
 update();
 export async function sendSettingsReport(input){
-  if(!device?.opened)throw new Error('Connect your dongle first.');
+  if(!connected())throw new Error('Connect your mouse first.');
   if(busy)throw new Error('A transfer is already in progress.');
   const reports=Array.isArray(input)?input:[input],expected={4:56,5:15,6:9,8:59,9:64};
   if(!reports.length||reports.length>12)throw new Error('Invalid transfer sequence.');
   for(const report of reports){
     if(!(report instanceof Uint8Array)||!Object.hasOwn(expected,report[0])||report.length!==expected[report[0]])throw new Error('Invalid settings report.');
+    if(bluetooth){validateBluetoothReport(report);continue;}
     const available=device.collections.some(c=>c.usagePage===11&&c.featureReports.some(r=>r.reportId===report[0]&&r.items.reduce((n,i)=>n+i.reportSize*i.reportCount,0)===(report.length-1)*8));
     if(!available)throw new Error('Expected settings report not exposed by dongle.');
   }
   busy=true;update();
-  try{for(const report of reports){await device.sendFeatureReport(report[0],report.slice(1));if(reports.length>1)await new Promise(resolve=>setTimeout(resolve,200));}}
+  try{for(const report of reports){if(bluetooth)await writeBluetoothSettings(bluetooth,report);else await device.sendFeatureReport(report[0],report.slice(1));if(reports.length>1)await new Promise(resolve=>setTimeout(resolve,200));}}
   finally{busy=false;update();}
 }
 export function currentButtons(){return structuredClone(choices);}

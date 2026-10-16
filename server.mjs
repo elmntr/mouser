@@ -1,6 +1,9 @@
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 const files = new Map([['/', ['buttons.html', 'text/html']], ['/button-protocol.mjs', ['button-protocol.mjs', 'text/javascript']], ['/probe', ['probe.html', 'text/html']], ['/key-test', ['key-test.html', 'text/html']]]);
+files.set('/bluetooth.html',['bluetooth.html','text/html']);
+files.set('/bluetooth-read.mjs',['bluetooth-read.mjs','text/javascript']);
+files.set('/bluetooth-probe.mjs',['bluetooth-probe.mjs','text/javascript']);
 files.set('/favicon.svg', ['favicon.svg', 'image/svg+xml']);
 files.set('/buttons-ui.mjs', ['buttons-ui.mjs', 'text/javascript']);
 files.set('/settings-protocol.mjs', ['settings-protocol.mjs', 'text/javascript']);

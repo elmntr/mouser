@@ -1,0 +1,50 @@
+{
+  "name": "AULA-SC650",
+  "battery": 69,
+  "manufacturer": "RivieraWaves SAS",
+  "vendorCharacteristics": [
+    {
+      "uuid": "0000fee1-0000-1000-8000-00805f9b34fb",
+      "read": true,
+      "write": false,
+      "writeWithoutResponse": false,
+      "notify": false,
+      "indicate": false
+    },
+    {
+      "uuid": "0000fee2-0000-1000-8000-00805f9b34fb",
+      "read": false,
+      "write": false,
+      "writeWithoutResponse": true,
+      "notify": false,
+      "indicate": false
+    },
+    {
+      "uuid": "0000fee3-0000-1000-8000-00805f9b34fb",
+      "read": false,
+      "write": true,
+      "writeWithoutResponse": false,
+      "notify": false,
+      "indicate": false
+    },
+    {
+      "uuid": "0000fee4-0000-1000-8000-00805f9b34fb",
+      "read": false,
+      "write": false,
+      "writeWithoutResponse": false,
+      "notify": true,
+      "indicate": false
+    },
+    {
+      "uuid": "0000fee5-0000-1000-8000-00805f9b34fb",
+      "read": false,
+      "write": false,
+      "writeWithoutResponse": false,
+      "notify": false,
+      "indicate": true
+    }
+  ],
+  "vendorRead": "02 00 00 00 00 00 00 00 00 02",
+  "settingsSupported": false,
+  "errors": []
+}

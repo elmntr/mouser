@@ -1,0 +1,56 @@
+Original Mouse.exe SHA-256: 95fd3bd2613bb681e9bcc60e9bb53f2c4aadb67f4f058d793c0f1775ce81174f
+Static disassembly only; executable was not run.
+
+  4146b5:	39 bb e0 03 00 00    	cmp    DWORD PTR [ebx+0x3e0],edi
+  4146bb:	74 52                	je     0x41470f
+  4146bd:	80 3e 06             	cmp    BYTE PTR [esi],0x6
+  4146c0:	75 15                	jne    0x4146d7
+  4146c2:	5f                   	pop    edi
+  4146c3:	5e                   	pop    esi
+  4146c4:	33 c0                	xor    eax,eax
+  4146c6:	5b                   	pop    ebx
+  4146c7:	8b 4d fc             	mov    ecx,DWORD PTR [ebp-0x4]
+  4146ca:	33 cd                	xor    ecx,ebp
+  4146cc:	e8 fe 42 00 00       	call   0x4189cf
+  4146d1:	8b e5                	mov    esp,ebp
+  4146d3:	5d                   	pop    ebp
+  4146d4:	c2 08 00             	ret    0x8
+  4146d7:	ff 75 0c             	push   DWORD PTR [ebp+0xc]
+  4146da:	8d 8b 5c b8 06 00    	lea    ecx,[ebx+0x6b85c]
+  4146e0:	56                   	push   esi
+  4146e1:	e8 9a 11 ff ff       	call   0x405880
+  4146e6:	68 f4 01 00 00       	push   0x1f4
+  4146eb:	8b f8                	mov    edi,eax
+  4146ed:	ff 15 c4 d3 41 00    	call   DWORD PTR ds:0x41d3c4
+  4146f3:	85 ff                	test   edi,edi
+
+  405eb0:	81 7b ea e3 fe 00 00 	cmp    DWORD PTR [ebx-0x16],0xfee3
+  405eb7:	0f 85 fe 00 00 00    	jne    0x405fbb
+  405ebd:	80 3b 00             	cmp    BYTE PTR [ebx],0x0
+  405ec0:	0f 84 f5 00 00 00    	je     0x405fbb
+
+  405f14:	8b 45 0c             	mov    eax,DWORD PTR [ebp+0xc]
+  405f17:	50                   	push   eax
+  405f18:	ff b5 48 ff ff ff    	push   DWORD PTR [ebp-0xb8]
+  405f1e:	89 07                	mov    DWORD PTR [edi],eax
+  405f20:	8d 47 04             	lea    eax,[edi+0x4]
+  405f23:	50                   	push   eax
+  405f24:	e8 32 3a 01 00       	call   0x41995b
+  405f29:	57                   	push   edi
+  405f2a:	68 f8 eb 41 00       	push   0x41ebf8
+  405f2f:	e8 bc 0d 00 00       	call   0x406cf0
+  405f34:	83 c4 1c             	add    esp,0x1c
+  405f37:	8d 43 e2             	lea    eax,[ebx-0x1e]
+  405f3a:	6a 00                	push   0x0
+  405f3c:	6a 00                	push   0x0
+  405f3e:	6a 00                	push   0x0
+  405f40:	57                   	push   edi
+  405f41:	50                   	push   eax
+  405f42:	56                   	push   esi
+  405f43:	ff 15 14 d0 41 00    	call   DWORD PTR ds:0x41d014
+
+  415759:	8d 85 34 ff ff ff    	lea    eax,[ebp-0xcc]
+  41575f:	6a 3b                	push   0x3b
+  415761:	50                   	push   eax
+  415762:	e8 29 ec ff ff       	call   0x414390
+

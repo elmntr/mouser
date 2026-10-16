@@ -1,0 +1,488 @@
+{
+  "name": "AULA-SC650",
+  "transport": "Bluetooth LE",
+  "services": [
+    {
+      "path": "service0001",
+      "uuid": "00001800-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0001/char0002",
+      "uuid": "00002a00-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0001/char0004",
+      "uuid": "00002a01-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0001/char0006",
+      "uuid": "00002a04-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0001/char0008",
+      "uuid": "00002ac9-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service000a",
+      "uuid": "00001801-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service000a/char000b",
+      "uuid": "00002a05-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "indicate"
+      ]
+    },
+    {
+      "path": "service000a/char000b/desc000d",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service000a/char000e",
+      "uuid": "00002b29-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "write"
+      ]
+    },
+    {
+      "path": "service000a/char0010",
+      "uuid": "00002b2a-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0012",
+      "uuid": "0000fee0-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0012/char0013",
+      "uuid": "0000fee1-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0012/char0013/desc0015",
+      "uuid": "00002901-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0012/char0016",
+      "uuid": "0000fee2-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "write-without-response"
+      ]
+    },
+    {
+      "path": "service0012/char0018",
+      "uuid": "0000fee3-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "write"
+      ]
+    },
+    {
+      "path": "service0012/char001a",
+      "uuid": "0000fee4-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "notify"
+      ]
+    },
+    {
+      "path": "service0012/char001a/desc001c",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0012/char001d",
+      "uuid": "0000fee5-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "indicate"
+      ]
+    },
+    {
+      "path": "service0012/char001d/desc001f",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0020",
+      "uuid": "0000180a-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0020/char0021",
+      "uuid": "00002a29-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0020/char0023",
+      "uuid": "00002a24-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0020/char0025",
+      "uuid": "00002a23-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0020/char0027",
+      "uuid": "00002a50-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service0029",
+      "uuid": "0000180f-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0029/char002a",
+      "uuid": "00002a19-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "notify"
+      ]
+    },
+    {
+      "path": "service0029/char002a/desc002c",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d",
+      "uuid": "00001812-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char002e",
+      "uuid": "00002a4a-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service002d/char0030",
+      "uuid": "00002a4c-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "write-without-response"
+      ]
+    },
+    {
+      "path": "service002d/char0032",
+      "uuid": "00002a4b-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read"
+      ]
+    },
+    {
+      "path": "service002d/char0034",
+      "uuid": "00002a4e-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "write-without-response"
+      ]
+    },
+    {
+      "path": "service002d/char0036",
+      "uuid": "00002a22-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "notify"
+      ]
+    },
+    {
+      "path": "service002d/char0036/desc0038",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0039",
+      "uuid": "00002a32-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "write-without-response",
+        "write"
+      ]
+    },
+    {
+      "path": "service002d/char003b",
+      "uuid": "00002a4d-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "notify"
+      ]
+    },
+    {
+      "path": "service002d/char003b/desc003d",
+      "uuid": "00002908-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char003b/desc003e",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char003f",
+      "uuid": "00002a4d-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "write-without-response",
+        "write"
+      ]
+    },
+    {
+      "path": "service002d/char003f/desc0041",
+      "uuid": "00002908-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0042",
+      "uuid": "00002a4d-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "notify"
+      ]
+    },
+    {
+      "path": "service002d/char0042/desc0044",
+      "uuid": "00002908-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0042/desc0045",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0046",
+      "uuid": "00002a4d-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "notify"
+      ]
+    },
+    {
+      "path": "service002d/char0046/desc0048",
+      "uuid": "00002908-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0046/desc0049",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char004a",
+      "uuid": "00002a4d-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "notify"
+      ]
+    },
+    {
+      "path": "service002d/char004a/desc004c",
+      "uuid": "00002908-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char004a/desc004d",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char004e",
+      "uuid": "00002a4d-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "write-without-response",
+        "write"
+      ]
+    },
+    {
+      "path": "service002d/char004e/desc0050",
+      "uuid": "00002908-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0051",
+      "uuid": "00002a4d-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "notify"
+      ]
+    },
+    {
+      "path": "service002d/char0051/desc0053",
+      "uuid": "00002908-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0051/desc0054",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0055",
+      "uuid": "00002a4d-0000-1000-8000-00805f9b34fb",
+      "flags": [
+        "read",
+        "notify"
+      ]
+    },
+    {
+      "path": "service002d/char0055/desc0057",
+      "uuid": "00002908-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service002d/char0055/desc0058",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0059",
+      "uuid": "f000ffc0-0451-4000-b000-000000000000",
+      "flags": []
+    },
+    {
+      "path": "service0059/char005a",
+      "uuid": "f000ffc1-0451-4000-b000-000000000000",
+      "flags": [
+        "write-without-response",
+        "write",
+        "notify"
+      ]
+    },
+    {
+      "path": "service0059/char005a/desc005c",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0059/char005a/desc005d",
+      "uuid": "00002901-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0059/char005e",
+      "uuid": "f000ffc2-0451-4000-b000-000000000000",
+      "flags": [
+        "write-without-response",
+        "write",
+        "notify"
+      ]
+    },
+    {
+      "path": "service0059/char005e/desc0060",
+      "uuid": "00002902-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    },
+    {
+      "path": "service0059/char005e/desc0061",
+      "uuid": "00002901-0000-1000-8000-00805f9b34fb",
+      "flags": []
+    }
+  ],
+  "reads": {
+    "service0012/char0013": {
+      "hex": "01000000000000000001",
+      "text": "\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001"
+    },
+    "service0012/char0013/desc0015": {
+      "hex": "666565315f6f6e6c795f72656164",
+      "text": "fee1_only_read"
+    },
+    "service0020/char0021": {
+      "hex": "52697669657261576176657320534153",
+      "text": "RivieraWaves SAS"
+    },
+    "service0020/char0023": {
+      "hex": "52572d424c452d312e30",
+      "text": "RW-BLE-1.0"
+    },
+    "service0029/char002a": {
+      "hex": "45",
+      "text": "E"
+    },
+    "service0059/char005a/desc005d": {
+      "hex": "496d67204964656e7469667900",
+      "text": "Img Identify\u0000"
+    },
+    "service0059/char005e/desc0061": {
+      "hex": "496d6720426c6f636b00",
+      "text": "Img Block\u0000"
+    }
+  },
+  "hid": [
+    {
+      "identity": "0005:0000045E:0000008E",
+      "descriptor_hex": "05010906a1018501050719e029e71500250175019508810295017508810195057501050819012905910295017503910195067508150025ff0507190029ff8100c005010902a10185020901a1000509190129051500250195057501810295017503810105010930093116018026ff7f75109502810609381581257f750895018106050c0a380295018106c0c00612ff0a12ffa101850409017508951316000026ff00190029ff8100c00612ff0a12ffa101850509017508951316000026ff00190029ff8100950875010508190129089102c0050c0901a101850619002a9c021500269c02950175108100c005010980a101850805011981298315002501950375018106950175058101c0",
+      "reports": {
+        "input": [
+          {
+            "id": 1,
+            "payload_bits": 64
+          },
+          {
+            "id": 2,
+            "payload_bits": 56
+          },
+          {
+            "id": 4,
+            "payload_bits": 152
+          },
+          {
+            "id": 5,
+            "payload_bits": 152
+          },
+          {
+            "id": 6,
+            "payload_bits": 16
+          },
+          {
+            "id": 8,
+            "payload_bits": 8
+          }
+        ],
+        "output": [
+          {
+            "id": 1,
+            "payload_bits": 8
+          },
+          {
+            "id": 5,
+            "payload_bits": 8
+          }
+        ],
+        "feature": []
+      }
+    }
+  ],
+  "battery_percent": 69
+}

@@ -49,3 +49,11 @@ DPI sends six stages (50–12000, steps of 50 through 10000 then 100), active st
 Serializers follow the supplied Aula executable, not the incompatible X11 DPI lookup table or its RGB checksum shortcuts. Run `node tools/test_settings_protocol.mjs` for DPI bounds, checksum, layout and RGB fixture checks. Browser confirmation/disconnected-device handling has been checked without a hardware write. Expanded original-style features and remaining limits are listed in docs/FEATURES.md. See PLAN.md and docs/PROTOCOL.md for evidence.
 
 UI checks: `node tools/test_customization.mjs` covers granted-device reuse, explicit device selection, cancellation, device validation and mouse region classification. Browser checks verified direct mesh selection, hotspot/editor synchronization, rotation, paired-device reconnection and 1366×768 layouts without page scrolling. Narrow screens use a stacked layout.
+
+## Bluetooth investigation
+
+The main interface now has **Connect Bluetooth**. Rear side button → F8 was confirmed on the physical SC650 over Bluetooth on 2026-10-16. Button mappings use the original app's FEE3 write path. DPI and lighting can be applied experimentally and still need physical confirmation over Bluetooth. Polling, macro uploads and full profile apply remain dongle-only; local profile editing still works. Connecting never applies saved settings.
+
+The separate /bluetooth.html page retains the battery/service diagnostic and explicit F8 test. Brave on Linux needs its Web Bluetooth API flag enabled. See docs/BLUETOOTH.md for evidence and limitations.
+
+Mouser automatically reconnects to previously authorized mice on load, when returning to the page, and every 10 seconds while the page is visible. It prefers the last successful connection type. Automatic attempts never display a chooser or apply settings. First-time permission still requires Connect; browsers without Bluetooth.getDevices need a manual Bluetooth connection.
