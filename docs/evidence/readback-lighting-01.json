@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-10-16T03:22:50.173039+00:00",
+  "device": "/dev/hidraw3",
+  "operation": "GET_FEATURE",
+  "report_id": 5,
+  "requested_length": 15,
+  "returned_length": 15,
+  "hex": "01 00 c9 00 61 c5 f8 28 ca 25 4d a5 eb 4b 98",
+  "matches_requested_report_id": false,
+  "verified_settings_backup": false
+}

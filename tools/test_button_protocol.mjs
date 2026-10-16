@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import { buildButtonReport } from '../button-protocol.mjs';
+const packet = buildButtonReport('f8');
+assert.equal(Buffer.from(packet).toString('hex'), '083b010200000300000400000d00000d00003c00001100410600003c00000100000100000100000100000100000100000100000a0000090000010d');
+const previous = buildButtonReport('alt-j');
+assert.deepEqual([...previous.slice(21,24)],[17,4,13]);
+assert.deepEqual([...previous.slice(0,21)],[...packet.slice(0,21)]);
+assert.deepEqual([...previous.slice(24,57)],[...packet.slice(24,57)]);
+assert.equal((previous[57]<<8)|previous[58], previous.slice(3,57).reduce((a,b)=>a+b,0));
+assert.deepEqual([...buildButtonReport('back').slice(21,24)],[5,0,0]);
+assert.throws(()=>buildButtonReport('__proto__'));
+const custom=buildButtonReport({rear:{type:'key',key:'J',modifiers:4},front:{type:'key',key:'F12',modifiers:15}});
+assert.deepEqual([...custom.slice(21,27)],[17,4,13,17,15,69]);
+assert.deepEqual([...custom.slice(0,21)],[...packet.slice(0,21)]);
+assert.deepEqual([...custom.slice(27,57)],[...packet.slice(27,57)]);
+assert.equal((custom[57]<<8)|custom[58],custom.slice(3,57).reduce((a,b)=>a+b,0));
+for(const bad of [{type:'key',key:'NoSuchKey',modifiers:0},{type:'key',key:'F8',modifiers:16},{type:'key',key:'J',modifiers:-1},{type:'key',key:'J',modifiers:1.5},{type:'__proto__'}])assert.throws(()=>buildButtonReport({rear:bad,front:{type:'forward'}}));
+console.log('Browser packet matches the successful native packet; restore and validation checks pass.');

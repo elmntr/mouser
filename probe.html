@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg"><title>SC650 connection check</title>
+<style>
+body{font:17px system-ui;background:#15181e;color:#edf1f7;max-width:850px;margin:60px auto;padding:0 24px}button{font:inherit;background:#a4e5be;color:#11221a;border:0;border-radius:8px;padding:12px 20px;cursor:pointer}button:disabled{opacity:.5}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#20252e;padding:20px;border-radius:8px}p{line-height:1.6}
+</style>
+<h1>SC650 connection check</h1>
+<p>This check opens the dongle and lists the configuration reports exposed by your browser. It sends no device reports and changes no mouse settings.</p>
+<button id="connect">Select mouse dongle</button>
+<pre id="result" role="status" aria-live="polite">Ready.</pre>
+<script>
+const button=document.querySelector('#connect');
+const result=document.querySelector('#result');
+function describe(collection){
+  return {usagePage:collection.usagePage,usage:collection.usage,
+    featureReports:collection.featureReports.map(r=>({reportId:r.reportId,payloadBits:r.items.reduce((n,i)=>n+i.reportSize*i.reportCount,0)})),
+    children:collection.children.map(describe)};
+}
+button.disabled=!('hid' in navigator);
+if(button.disabled)result.textContent='WebHID is unavailable in this browser. Open this local page in Brave or Chrome.';
+button.addEventListener('click',async()=>{
+  button.disabled=true;
+  try{
+    const devices=await navigator.hid.requestDevice({filters:[{vendorId:0x1d57,productId:0xfa60,usagePage:0x0b,usage:0}]});
+    if(!devices.length){result.textContent='No device selected. Nothing changed.';return;}
+    const findings=[];
+    for(const device of devices){
+      try{
+        await device.open();
+        findings.push({productName:device.productName,vendorId:device.vendorId,productId:device.productId,opened:true,collections:device.collections.map(describe)});
+      }finally{if(device.opened)await device.close();}
+    }
+    result.textContent=JSON.stringify(findings,null,2);
+  }catch(error){result.textContent=error.name+': '+error.message;}
+  finally{button.disabled=false;}
+});
+</script>
+</html>

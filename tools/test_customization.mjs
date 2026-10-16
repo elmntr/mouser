@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {connectSc650,isSc650} from '../hid-connection.mjs';
+import {clickPlate,mouseButtons,getMouseButton} from '../mouse-selection.mjs';
+const device=()=>({vendorId:0x1d57,productId:0xfa60,opened:false,collections:[{usagePage:11,usage:0,featureReports:[{reportId:8,items:[{reportSize:8,reportCount:58}]}]}],async open(){this.opened=true;}});
+const paired=device();let prompts=0;
+const hid={async getDevices(){return [paired];},async requestDevice(){prompts++;return [device()];}};
+assert.equal(isSc650(paired),true);assert.equal(isSc650({...paired,productId:0x205e}),false);
+assert.equal(await connectSc650(hid),paired);assert.equal(prompts,0);assert.equal(paired.opened,true);
+const chosen=await connectSc650(hid,true);assert.notEqual(chosen,paired);assert.equal(chosen.opened,true);assert.equal(prompts,1);
+assert.equal(await connectSc650({getDevices:async()=>[],requestDevice:async()=>[]}),null);
+await assert.rejects(connectSc650(null),/Brave or Chrome/);
+await assert.rejects(connectSc650({getDevices:async()=>[],requestDevice:async()=>[{...paired,productId:1}]}),/expected SC650/);
+assert.equal(mouseButtons.length,5);assert.equal(new Set(mouseButtons.map(b=>b.id)).size,5);assert.equal(getMouseButton('rear').number,5);
+assert.equal(clickPlate(-.01,.03),'left');assert.equal(clickPlate(.01,.03),'right');assert.equal(clickPlate(-.01,-.03),null);
+console.log('Authorized-device reconnect, explicit chooser, cancellation, device validation, and 3D button regions pass.');

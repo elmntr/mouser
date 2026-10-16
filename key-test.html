@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg"><title>SC650 button test</title>
+<style>body{font:20px system-ui;background:#15181e;color:#edf1f7;max-width:760px;margin:70px auto;padding:24px}button{font:inherit;padding:16px;border-radius:8px}pre{white-space:pre-wrap;background:#252b35;padding:24px}</style>
+<h1>SC650 button test</h1>
+<p>Click the test area, then press and release the rear side button. This page only displays input events. It does not configure the mouse.</p>
+<button id="test">Click here, then press the rear side button</button>
+<pre id="result" role="status" aria-live="polite">Waiting for input.</pre>
+<script>
+const output=document.querySelector('#result');let events=[];
+function log(message){events.unshift(message);output.textContent=events.slice(0,12).join('\n');}
+for(const type of ['keydown','keyup'])document.addEventListener(type,event=>{event.preventDefault();log(`${type}: ${event.code} (${event.key})${event.code==='F8'?' — F8 detected':''}`);});
+for(const type of ['mousedown','mouseup'])document.addEventListener(type,event=>{event.preventDefault();log(`${type}: mouse button ${event.button}${event.button===3?' (Back)':event.button===4?' (Forward)':''}`);});
+document.addEventListener('auxclick',event=>event.preventDefault());
+document.addEventListener('contextmenu',event=>event.preventDefault());
+</script></html>

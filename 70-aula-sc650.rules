@@ -1,0 +1,4 @@
+# Allow the active local desktop user to configure this USB dongle.
+# Must run before 73-seat-late.rules. USB interface 02 is the configuration interface.
+SUBSYSTEM=="hidraw", KERNEL=="hidraw*", ATTRS{idVendor}=="1d57", ATTRS{idProduct}=="fa60", ENV{ID_USB_INTERFACE_NUM}=="02", TAG+="uaccess"
+SUBSYSTEM=="hidraw", KERNEL=="hidraw*", ATTRS{idVendor}=="1d57", ATTRS{idProduct}=="205e", ENV{ID_USB_INTERFACE_NUM}=="02", TAG+="uaccess"

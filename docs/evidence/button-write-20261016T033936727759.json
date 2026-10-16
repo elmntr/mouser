@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-10-16T03:39:36.727686+00:00",
+  "device": "/dev/hidraw3",
+  "action": "rear-f8",
+  "operation": "SET_FEATURE",
+  "hex": "08 3b 01 02 00 00 03 00 00 04 00 00 0d 00 00 0d 00 00 3c 00 00 11 00 41 06 00 00 3c 00 00 01 00 00 01 00 00 01 00 00 01 00 00 01 00 00 01 00 00 01 00 00 0a 00 00 09 00 00 01 0d",
+  "behavior_verified": false,
+  "error": "[Errno 71] Protocol error",
+  "errno": 71,
+  "transport_succeeded": false
+}

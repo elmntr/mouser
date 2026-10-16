@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {buildDpiReport,buildRgbReport} from '../settings-protocol.mjs';
+const dpi={stages:[800,1600,2400,3200,6400,12000],active:2,angleSnap:false,ripple:true};
+const p=buildDpiReport(dpi);
+assert.equal(p.length,56);assert.deepEqual([...p.slice(0,8)],[4,56,1,0,1,63,0,0]);
+for(let i=0;i<6;i++)assert.equal(p[8+i]|p[16+i]<<8,dpi.stages[i]);
+assert.equal(p[24],2);assert.equal(p[49],1);assert.equal(p[50]<<8|p[51],p.slice(3,50).reduce((a,b)=>a+b,0));
+assert.deepEqual([...p.slice(52)],[0,0,0,0]);
+for(const invalid of [0,12050,10050,NaN,800.5])assert.throws(()=>buildDpiReport({...dpi,stages:[invalid,1600,2400,3200,6400,12000]}));
+assert.throws(()=>buildDpiReport({...dpi,active:7}));
+const rgb={mode:1,brightness:8,speed:6,color:'#00ff00',sleep:1,deepSleep:10,response:4};
+assert.equal(Buffer.from(buildRgbReport(rgb)).toString('hex'),'050f011003a800ff00010401bf0000');
+const q=buildRgbReport({...rgb,color:'#ff0000'});assert.equal(q[6],255);assert.equal(q[7],0);assert.equal(q[11]<<8|q[12],q.slice(3,11).reduce((a,b)=>a+b,0));
+for(const bad of [{...rgb,color:'red'},{...rgb,mode:12},{...rgb,deepSleep:61},{...rgb,response:1},{...rgb,brightness:0}])assert.throws(()=>buildRgbReport(bad));
+console.log('SC650 DPI bounds, slot values, RGB packing and checksum fixtures pass.');
